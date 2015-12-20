@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 引用Spring的多个Schema空间的格式定义文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx  
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+        http://www.springframework.org/schema/lang
+		http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+		
+	<!--  	
+	<import resource="classpath:com/baobaotao/impt/beans1.xml"/>
+	-->
+	
+	<bean id="car1" class="com.baobaotao.attr.Car"
+		p:brand="红旗CA72"
+		p:price="2000"
+		p:color="黑色"
+		scope="prototype"
+	/>
+	
+	<bean id="car2" class="com.baobaotao.attr.Car"
+		p:brand="红旗CA72"
+		p:price="2000"
+		p:color="红色"
+		scope="prototype"
+	/>
+	
+	<!-- 上面两处配置的Car Bean除了颜色不同之外，其他配置都是相同的，我们可以配置一个抽象父Bean -->
+	<bean id="abstractCar" class="com.baobaotao.attr.Car"
+		p:brand="红旗CA72"
+		p:price="2000"
+		p:color="红色"
+		scope="prototype"
+		abstract="true"
+	/>
+	
+	<!-- 继承自"abstractCar" -->
+	<bean id="car3"  class="com.baobaotao.attr.Car" p:color="灰色" parent="abstractCar"/>
+	<!-- 继承自"abstractCar" -->
+	<bean id="car4"  class="com.baobaotao.attr.Car" p:color="白色" parent="abstractCar"/>
+	
+	<!-- 依赖 -->
+	<bean id="cacheManager" class="com.baobaotao.tagdepend.CacheManager" depends-on="sysInit"/>
+	
+	<bean id="sysInit" class="com.baobaotao.tagdepend.SysInit"/>	
+	
+	<!-- 一个<bean>引用另一个<bean>的id属性值，采用普通方式配置 -->
+	<bean id="car5" class="com.baobaotao.attr.Car" lazy-init="true"/>
+	
+ 	<bean id="boss1" class="com.baobaotao.attr.Boss" p:carId="car5" scope="prototype"/>
+ 	
+ 	<!-- 配置引用的优化方案 -->
+	<bean id="boss2" class="com.baobaotao.attr.Boss" >
+		<property name="carId">
+			<idref bean="car5"/>
+		</property>
+	</bean>
+	
+	<bean id="car6"  class="com.baobaotao.attr.Car" p:color="白色"  scope="request" >
+		<aop:scoped-proxy/>
+	</bean>
+	<bean id="boss3" class="com.baobaotao.attr.Boss"  p:car-ref="car6"/>
+	<bean id="boss4" class="com.baobaotao.attr.Boss"  p:car-ref="car6"/>
+	<bean id="boss5" class="com.baobaotao.attr.Boss"  p:car-ref="car6"/>
+	
+	
+	
+</beans>

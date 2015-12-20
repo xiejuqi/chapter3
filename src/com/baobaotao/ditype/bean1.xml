@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 引用Spring的多个Schema空间的格式定义文件 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/tx  
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+        http://www.springframework.org/schema/lang
+		http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+		http://www.springframework.org/schema/util 
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	
+	<!-- 属性注入 -->
+	<bean id="car" class="com.baobaotao.ditype.Car" >
+		<property name="maxSpeed" value="200"></property>
+		<property name="brand" value="红旗CA72"></property>
+		<property name="price" value="2000.00"></property>
+	</bean>	
+	
+	<!-- 属性命名的特殊规范，[变量的前两个字母要么全部大写，要么全部小写]，但是这个规范在这里并无报错！ -->
+	<bean id="foo" class="com.baobaotao.ditype.Foo">
+		<property name="iDCode" value="070101"></property>
+	</bean>
+	
+	<!-- 不同类型构造函数根据type属性注入 -->
+	<bean id="car1" class="com.baobaotao.ditype.ConstructorInjectCar">
+		<constructor-arg type="java.lang.String" value="红旗CA72"></constructor-arg>
+		<constructor-arg type="double" value="20000"></constructor-arg>
+	</bean>
+	
+	<!-- 不同类型的构造函数根据index注入 -->
+	<bean id="car2" class="com.baobaotao.ditype.ConstructorInjectCar2">
+		<constructor-arg index="0" value="红旗CA72"></constructor-arg>
+		<constructor-arg index="1" value="中国一汽"></constructor-arg>
+		<constructor-arg index="2" value="200000"></constructor-arg>
+	</bean>
+	
+	<!-- 不同类型的重载构造函数，根据type和index联合使用注入 -->
+	<bean id="car3" class="com.baobaotao.ditype.ConstructorInjectCar3">
+		<constructor-arg index="0" type="java.lang.String" value="红旗CA72"></constructor-arg>
+		<constructor-arg index="1" type="java.lang.String" value="中国一汽"></constructor-arg>
+		<constructor-arg index="2" type="int" value="200"></constructor-arg>
+	</bean>
+	
+	<bean id="office" class="com.baobaotao.ditype.Office">
+		<property name="site" value="北京市朝阳区宵云路26号鹏润大厦"></property>
+		<property name="size" value="10000平米"></property>
+	</bean>
+	
+	<!-- 通过自身反射类型匹配入参 -->
+	<bean id="boss" class="com.baobaotao.ditype.Boss">
+		<constructor-arg value="John"></constructor-arg>
+		<constructor-arg ref="car"></constructor-arg>
+		<constructor-arg ref="office"></constructor-arg>
+	</bean>
+	
+	<!-- 工厂类Bean -->
+	<bean id="carFactory" class="com.baobaotao.ditype.CarFactory"/>
+	
+	<!-- 通过非静态的工厂方法注入 -->
+	<bean id="car5" factory-bean="carFactory" factory-method="createHongQiCar"/>
+		
+	<!-- 通过静态的工厂方法注入 -->	
+	<bean id="car6" class="com.baobaotao.ditype.CarFactory" factory-method="getInstance"/>
+
+	
+	
+	
+</beans>
