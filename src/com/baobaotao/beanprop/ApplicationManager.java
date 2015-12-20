@@ -32,5 +32,6 @@ public class ApplicationManager extends BaseLoggerController{
 	private int sessionTimeout;
 	@Value("#{sysConfig.maxTagPageNum}")
 	private int maxTabpageNum;
+	
 }
 
