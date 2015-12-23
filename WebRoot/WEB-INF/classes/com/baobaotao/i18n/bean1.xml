@@ -42,6 +42,15 @@
 		<property name="cacheSeconds" value="5"/>
 	</bean>
 	
+	<!-- 容器级资源的配置 -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>com/baobaotao/i18n/fmt_resource</value>
+			</list>
+		</property>
+	</bean>
+	
 	
 
 	

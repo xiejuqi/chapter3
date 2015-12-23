@@ -58,6 +58,14 @@ public class ResourceBundleMessageSourceTest extends BaseLoggerController{
 			logger.info("[使用ReloadableResourceBundleMessageSource访问国际化资源文件-美式打招呼：{}]",str4);
 			Thread.sleep(20000);
 		}
+		
+		String str5 = ac.getMessage("greeting.common", params, Locale.US);
+		String str6 = ac.getMessage("greeting.morning", params, Locale.CHINA);
+		String str7 = ac.getMessage("greeting.afternoon", params, Locale.CHINA);
+		logger.info("[使用容器级的国际化资源文件-美式打招呼:{}]",str5);
+		logger.info("[使用容器级的国际化资源文件-中式早上好:{}]",str6);
+		logger.info("[使用容器级的国际化资源文件-中式下午好:{}]",str7);
+		
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
