@@ -33,7 +33,7 @@ public class TestSpringTypeAdvisor {
 //		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/advisor/RegexpMethodPointcutAdvisor.xml");
 		
 		/**使用动态切面方法匹配切面*/
-		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/advisor/DynamicMethodMatcherPointcut.xml");
+		/*ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/advisor/DynamicMethodMatcherPointcut.xml");
 
 		Waiter waiter = (Waiter) ac.getBean("waiter");
 		Seller seller = (Seller) ac.getBean("seller");
@@ -44,8 +44,27 @@ public class TestSpringTypeAdvisor {
 		waiter.greetTo("Peter");
 		waiter.greetTo("Jhon");
 		waiter.serveTo("John");
-		seller.greetTo("Jhon");
+		seller.greetTo("Jhon");*/
 		
+		
+		/**使用流程切面方法匹配切面*/
+		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/advisor/ControlFlowAdvisor.xml");
+		
+		Waiter waiter = (Waiter) ac.getBean("waiter3");
+		
+		WaiterDelegate waiterDelegate = new WaiterDelegate();
+		
+		waiterDelegate.setWaiter(waiter);
+		
+		System.out.println("------------从Waiter调用Waiter方法开始----------------------");
+		waiter.greetTo("John");
+		waiter.serveTo("Jason");
+		System.out.println("------------从Waiter调用Waiter方法结束----------------------");
+		
+		System.out.println();
+		System.out.println("------------从WaiterDelegate调用Waiter方法开始----------------------");
+		waiterDelegate.service("Proxy");
+		System.out.println("------------从WaiterDelegate调用Waiter方法结束----------------------");
 	}
 }
 
