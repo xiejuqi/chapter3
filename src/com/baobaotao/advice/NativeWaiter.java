@@ -27,7 +27,7 @@ import com.sun.istack.internal.logging.Logger;
 public class NativeWaiter extends BaseLoggerController implements Waiter {
 
 	@Override
-	public void greedTo(String name) {
+	public void greetTo(String name) {
 		logger.info("[greet to {}]",name);
 	}
 

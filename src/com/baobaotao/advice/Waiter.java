@@ -21,7 +21,7 @@ package com.baobaotao.advice;
  * 
  */
 public interface Waiter {
-	void greedTo(String name);
+	void greetTo(String name);
 	void serverTo(String name);
 }
 

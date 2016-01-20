@@ -50,7 +50,7 @@ public class TestBeforeAdvice {
 		
 		System.out.println("proxy:"+proxy);
 		
-		proxy.greedTo("John");
+		proxy.greetTo("John");
 		proxy.serverTo("Tom");
 		
 	}
