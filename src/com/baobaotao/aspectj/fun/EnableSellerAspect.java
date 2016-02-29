@@ -33,5 +33,5 @@ public class EnableSellerAspect {
 	 * */
 	@DeclareParents(value="com.baobaotao.aspectj.fun.NaiveWaiter",defaultImpl=SmartSeller.class)
 	/**要实现的目标接口*/
-	public Seller seller;
+	public static Seller seller;
 }

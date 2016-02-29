@@ -28,6 +28,7 @@ public class SmartSeller extends BaseLoggerController implements Seller {
 	@Override
 	public void sell(String goods,String clientName) {
 		logger.info("sell {} to {}",goods,clientName);
+//		System.out.println("seller "+goods+"to "+clientName);
 	}
 
 }
