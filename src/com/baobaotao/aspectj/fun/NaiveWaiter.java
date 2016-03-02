@@ -34,5 +34,9 @@ public class NaiveWaiter extends BaseLoggerController implements Waiter {
 	public void greetTo(String clientName) {
 		logger.info("greetTo to {}",clientName);
 	}
+	
+	public void smile(String name,int times){
+		logger.info("smile to {}-{}..",name,times);
+	}
 
 }

@@ -28,8 +28,8 @@ import com.baobaotao.base.BaseLoggerController;
  * 
  */
 @Aspect
-public class ProceedJoinPointTest extends BaseLoggerController{
-	@Around("execution(* greetTo(..) && target(com.baobaotao.NaiveWaiter)")	//(1)环绕增强
+public class ProceedJoinPointAspect extends BaseLoggerController{
+	@Around("execution(* greetTo(..)) && target(com.baobaotao.aspectj.fun.NaiveWaiter)")	//(1)环绕增强
 	public void joinPointAccess(ProceedingJoinPoint pjp) throws Throwable{	//(2)声明连接点入参
 		logger.info("[---joinPointAccess---]");
 		
