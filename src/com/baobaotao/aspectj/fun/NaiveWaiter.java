@@ -1,6 +1,8 @@
 package com.baobaotao.aspectj.fun;
 
 import com.baobaotao.base.BaseLoggerController;
+import com.baobaotao.aspectj.advanced.Monitorable;
+import com.baobaotao.aspectj.fun.Waiter;
 
 /**
  * 
@@ -23,20 +25,21 @@ import com.baobaotao.base.BaseLoggerController;
  * @Content: create
  * 
  */
+@Monitorable
 public class NaiveWaiter extends BaseLoggerController implements Waiter {
-
+	
 	@Override
 	public void serveTo(String clientName) {
-		logger.info("serveTo to {}",clientName);
+		logger.info("[serveTo to {}]",clientName);
 	}
-
+	
 	@Override
 	public void greetTo(String clientName) {
-		logger.info("greetTo to {}",clientName);
+		logger.info("[greetTo to {}]",clientName);
 	}
 	
 	public void smile(String name,int times){
-		logger.info("smile to {}-{}..",name,times);
+		logger.info("[smile to {}-{}..]",name,times);
 	}
 
 }
