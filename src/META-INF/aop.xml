@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aspectj>
+	<aspects>
+		<!-- (1)使用的切面类 -->
+		<aspect name="com.baobaotao.ltw.PreGreetingAspect"/>
+	</aspects>
+	
+	<!-- (2)要织入切面的候选类 -->
+	<weaver options="-showWeaveInfo
+			-XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
+		<include within="com.baobaotao.ltw.*"/>
+	</weaver>
+</aspectj>
+		
