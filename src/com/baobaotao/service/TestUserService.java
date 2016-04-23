@@ -3,12 +3,15 @@ package com.baobaotao.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.baobaotao.dao.UserDao;
 import com.baobaotao.domain.User;
 
 /**
@@ -41,6 +44,9 @@ public class TestUserService {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired 
+	private UserDao userDao;
+	
 	@Test
 	public void hasMatchUser() {
 		boolean b1 = userService.hasMatchUser("admin", "123456");
@@ -55,6 +61,18 @@ public class TestUserService {
 		User user = userService.findUserByUserName("admin");
 		assertEquals(user.getUserName(), "admin");
 		userService.loginSuccess(user);
+	}
+	
+	@Test
+	public void add(){
+		User u = new User();
+		u.setUserName("Think");
+		u.setCredits(10);
+		u.setPassword("123456");
+		u.setLastVisit(new Date());
+		u.setLastIp("11111");
+		
+		userDao.addUser(u);
 	}
 	
 }

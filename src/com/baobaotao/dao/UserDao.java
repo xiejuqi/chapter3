@@ -81,4 +81,16 @@ public class UserDao {
 			new Object[] { user.getLastVisit(), user.getLastIp(), user.getCredits(),
 							user.getUserId() });
 	}
+	
+	/**
+	 * 添加一个用户
+	 * @param user
+	 */
+	public void addUser(User user){
+		String sqlStr = "INSERT INTO t_user (user_name,credits, PASSWORD,last_visit,last_ip) VALUES (?,?,?,?,?);";
+		jdbcTemplate.update(
+				sqlStr,
+				new Object[] { user.getUserName(), user.getCredits(), user.getPassword(),user.getLastVisit(),
+								user.getLastIp()});
+	}
 }

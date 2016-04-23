@@ -3,6 +3,8 @@
 	<aspects>
 		<!-- (1)使用的切面类 -->
 		<aspect name="com.baobaotao.ltw.PreGreetingAspect"/>
+		<!-- 使用注解引入LTW事务切面 -->
+		<aspect name="org.springframework.transaction.aspectj.AnnotationTransactionAspect"/>
 	</aspects>
 	
 	<!-- (2)要织入切面的候选类 -->
