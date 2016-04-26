@@ -30,7 +30,6 @@ import org.springframework.stereotype.Service;
  * @Content: create
  * 
  */
-@Service
 public class UserService {
 	
 	protected  Logger logger = LoggerFactory.getLogger(getClass());
