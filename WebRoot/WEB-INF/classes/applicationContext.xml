@@ -22,7 +22,7 @@
 		http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 		
 	<!-- 扫描类包，将标注Spring注解的类自动转化Bean，同时完成Bean的注入 -->
-	<context:component-scan base-package="com.baobaotao.dao"	  />
+	<context:component-scan base-package="com.baobaotao.dao"	/>
 	<context:component-scan base-package="com.baobaotao.service"/>
 	
 	<!--  
@@ -52,7 +52,7 @@
 	/>
 	
 	<!-- 通过AOP配置提供事务增强，让service包下的所有类支持事务 -->
-	<!--  
+	
 	 <aop:config proxy-target-class="true">			
 		<aop:pointcut id="serviceMethod"  expression="execution(* com.baobaotao.service..*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" />
@@ -63,6 +63,6 @@
 			<tx:method name="*"/>
 		</tx:attributes>
 	</tx:advice>
-	-->
+	
 	
 </beans>

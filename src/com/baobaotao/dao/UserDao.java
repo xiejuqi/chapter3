@@ -1,14 +1,26 @@
 package com.baobaotao.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
+import org.apache.commons.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.baobaotao.domain.User;
+import com.mysql.jdbc.Statement;
 
 /**
  * 
@@ -37,6 +49,11 @@ public class UserDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private BasicDataSource dataSource;
+	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
 	/**
 	 * 验证此用户是否存在
@@ -92,5 +109,42 @@ public class UserDao {
 				sqlStr,
 				new Object[] { user.getUserName(), user.getCredits(), user.getPassword(),user.getLastVisit(),
 								user.getLastIp()});
+		
+		/**指定参数的类型*/
+		/**jdbcTemplate.update(sqlStr,new Object[] { user.getUserName(), user.getCredits(), user.getPassword(),user.getLastVisit(),
+								user.getLastIp()},new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.DATE});*/
+	}
+	
+	/**
+	 * 添加一个用户(返回主键)
+	 * @param user
+	 */
+	public void addUserWithKey(final User user){
+		
+		final String sql = "INSERT INTO t_user (user_name,credits, PASSWORD,last_visit,last_ip) VALUES (?,?,?,?,?);";
+		
+		final Connection conn = DataSourceUtils.getConnection(dataSource);
+		
+		/**1.创建一个主键持有者*/
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, user.getUserName());
+				ps.setInt(2, user.getCredits());
+				ps.setString(3, user.getPassword());
+				ps.setDate(4, null);
+				ps.setString(5, "127.0.0.1");
+				
+				return ps;
+			}
+		},keyHolder);
+		
+		/**2.从主键持有者中获取主键*/
+		user.setUserId(keyHolder.getKey().intValue());
+		
+		logger.info("[user={}]",user);
 	}
 }

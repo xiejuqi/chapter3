@@ -10,7 +10,7 @@ import com.baobaotao.nestcall.UserService;
  * 
  * @Filename TestSpringNestTransactionController.java
  * 
- * @Description	用于测试Spring相互嵌套的服务方法的事务管理
+ * @Description 用于测试Spring相互嵌套的服务方法的事务管理
  * 
  * @Version 1.0
  * 
@@ -34,7 +34,7 @@ public class TestSpringNestTransactionController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/testNestTransaction.html")
-	public String test(){
+	public String test() {
 		userService.logon("admin");
 		return "login";
 	}

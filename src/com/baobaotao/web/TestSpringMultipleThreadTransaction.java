@@ -1,7 +1,6 @@
 package com.baobaotao.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,7 +10,7 @@ import com.baobaotao.multithread.UserService;
  * 
  * @Filename TestSpringMultipleThreadTransaction.java
  * 
- * @Description	Spring多线程下的事务困惑
+ * @Description Spring多线程下的事务困惑
  * 
  * @Version 1.0
  * 
@@ -35,7 +34,7 @@ public class TestSpringMultipleThreadTransaction {
 	private UserService userService;
 	
 	@RequestMapping(value = "/testMultithreadTransaction.html")
-	public String test(){
+	public String test() {
 		userService.logon("admin");
 		return "login";
 	}

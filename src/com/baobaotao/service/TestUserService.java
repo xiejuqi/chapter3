@@ -73,6 +73,7 @@ public class TestUserService {
 		u.setLastIp("11111");
 		
 		userDao.addUser(u);
+		/*userDao.addUserWithKey(u);*/
 	}
 	
 }
