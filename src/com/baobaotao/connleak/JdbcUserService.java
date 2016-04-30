@@ -3,6 +3,8 @@ package com.baobaotao.connleak;
 import java.sql.Connection;
 import java.util.Date;
 
+import javax.activation.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,9 +47,16 @@ public class JdbcUserService {
 	
 	@Transactional("jdbcManager")
 	public void logon(String userName){
+		
+		Connection conn = null;
+		
 		try {
 			/**1.直接从数据源获取连接,后续程序没有显式释放该连接*/
-			Connection conn = jdbcTemplate.getDataSource().getConnection();
+			 conn = jdbcTemplate.getDataSource().getConnection();
+			
+			/**使用DataSourceUtils获取数据连接,不用自己手动去释放连接，Spring会帮我们完成。*/
+			/*conn = DataSourceUtils.getConnection(jdbcTemplate.getDataSource());*/
+			
 			String sql = "UPDATE t_user SET last_visit=? WHERE user_name = ? ";
 			jdbcTemplate.update(sql,new Date(),userName);
 			
@@ -54,6 +64,9 @@ public class JdbcUserService {
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally{
+			/**2.显式使用DataSourceUtils释放连接*/
+			/*DataSourceUtils.releaseConnection(conn, jdbcTemplate.getDataSource());*/
 		}
 	}
 	
@@ -92,11 +105,12 @@ public class JdbcUserService {
 	}
 	
 	public static void main(String[] args) {
-		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/connleak/SpringConnleakConfig.xml");
+		/*ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/connleak/SpringConnleakConfig.xml");*/
+		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/connleak/TransactionAwareDataSourceProxy.xml");
 		
 		JdbcUserService userService = (JdbcUserService) ac.getBean("jdbcUserService");
 		
-		BasicDataSource basicDataSource = (BasicDataSource) ac.getBean("dataSource");
+		BasicDataSource basicDataSource = (BasicDataSource) ac.getBean("originDataSource");
 		
 		/**4.汇报数据源初始连接占用情况 0:0*/
 		JdbcUserService.reportConn(basicDataSource);
