@@ -1,24 +1,33 @@
 package com.baobaotao.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.CallableStatementCallback;
+import org.springframework.jdbc.core.CallableStatementCreator;
+import org.springframework.jdbc.core.CallableStatementCreatorFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowCountCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -234,5 +243,82 @@ public class UserDao {
 			}
 			
 		});
+	}
+	
+	/**
+	 * 演示queryForObject()获取单值
+	 * @param userId
+	 * @return
+	 */
+	public double getReplyRate(int userId){
+		String sql = "SELECT topic_replies,topic_views FROM t_topic WHERE user_id=?";
+		double rate = jdbcTemplate.queryForObject(sql, new Object[]{userId},new RowMapper<Double>(){
+			@Override
+			public Double mapRow(ResultSet rs, int rowNum) throws SQLException {
+				int replies = rs.getInt("topic_replies");
+				int views = rs.getInt("topic_views");
+				
+				if(views>0){
+					return new Double((double)replies/views);
+				}else{
+					return new Double(0.0);
+				}
+			}
+		});
+		return rate;
+	}
+	
+	/**
+	 * JdbcTemplate 调用MySql存储过程1
+	 * @param userId
+	 * @return
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public int getUserNum(final int userId){
+		/**1.调用存储过程的SQL语句*/
+		String sql = "{call P_GET_USER_NUM(?,?)}";
+		Integer num = jdbcTemplate.execute(sql,new CallableStatementCallback() {
+			@Override
+			public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+				/**2.绑定入参*/
+				cs.setInt(1, userId);
+				/**3.注册输出参数*/
+				cs.registerOutParameter(2, Types.INTEGER);
+				cs.execute();
+				/**4.获取输出参数的值*/
+				return cs.getInt(2);
+			}
+		});
+		return num;
+	}
+	
+	/**
+	 * JdbcTemplate 调用MySql存储过程2
+	 * @param userId
+	 * @return
+	 */
+	public int getUserNum2(final int userId){
+		String sql = "{call P_GET_USER_NUM(?,?)}";
+		
+		/**1.通过CallableStatementCreatorFactory创建CallableStatementCreator*/
+		CallableStatementCreatorFactory fac = new CallableStatementCreatorFactory(sql);
+		
+		fac.addParameter(new SqlParameter("userId",Types.INTEGER));
+		fac.addParameter(new SqlOutParameter("userNums",Types.INTEGER));
+		
+		Map<String,Integer> paramsMap = new HashMap<String, Integer>();
+		paramsMap.put("userId", userId);
+		
+		CallableStatementCreator csc = fac.newCallableStatementCreator(paramsMap);
+		
+		Integer num = jdbcTemplate.execute(csc,new CallableStatementCallback<Integer>() {
+			@Override
+			public Integer doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+				cs.execute();
+				return cs.getInt(2);
+			}
+		});
+		
+		return num ;
 	}
 }

@@ -76,12 +76,17 @@ public class TestUserService {
 		/*userDao.addUserWithKey(u);*/
 	}
 	
-	@Test
 	public void queryList(){
 		List<User> list = userDao.getUsers2("Think");
 		for(User u : list){
 			System.out.println("User:"+u);
 		}
+	}
+	
+	@Test
+	public void procedure(){
+		int n = userDao.getUserNum2(1);
+		System.out.println("n="+n);
 	}
 	
 	public void batchAdd(){
