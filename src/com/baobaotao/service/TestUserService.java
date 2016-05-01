@@ -3,8 +3,11 @@ package com.baobaotao.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.aspectj.org.eclipse.jdt.core.dom.SynchronizedStatement;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +50,6 @@ public class TestUserService {
 	@Autowired 
 	private UserDao userDao;
 	
-	@Test
 	public void hasMatchUser() {
 		boolean b1 = userService.hasMatchUser("admin", "123456");
 		boolean b2 = userService.hasMatchUser("admin", "111111");
@@ -55,7 +57,6 @@ public class TestUserService {
 		assertTrue(!b2);
 	}
 	
-	@Test
 	public void findUserByUserName() {
 		System.out.println("[userService=]" + userService);
 		User user = userService.findUserByUserName("admin");
@@ -63,7 +64,6 @@ public class TestUserService {
 		userService.loginSuccess(user);
 	}
 	
-	@Test
 	public void add(){
 		User u = new User();
 		u.setUserName("Think");
@@ -74,6 +74,45 @@ public class TestUserService {
 		
 		userDao.addUser(u);
 		/*userDao.addUserWithKey(u);*/
+	}
+	
+	@Test
+	public void queryList(){
+		List<User> list = userDao.getUsers2("Think");
+		for(User u : list){
+			System.out.println("User:"+u);
+		}
+	}
+	
+	public void batchAdd(){
+		List<User> list = new ArrayList<User>();
+		
+		User u = new User();
+		u.setUserName("Think");
+		u.setCredits(10);
+		u.setPassword("123456");
+		u.setLastVisit(new Date());
+		u.setLastIp("11111");
+		
+		User u2 = new User();
+		u2.setUserName("Think");
+		u2.setCredits(10);
+		u2.setPassword("123456");
+		u2.setLastVisit(new Date());
+		u2.setLastIp("11111");
+		
+		User u3 = new User();
+		u3.setUserName("Think");
+		u3.setCredits(10);
+		u3.setPassword("123456");
+		u3.setLastVisit(new Date());
+		u3.setLastIp("11111");
+		
+		list.add(u);
+		list.add(u2);
+		list.add(u3);
+		
+		userDao.batchAddUser(list);
 	}
 	
 }
