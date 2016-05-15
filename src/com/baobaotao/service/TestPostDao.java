@@ -1,6 +1,8 @@
 package com.baobaotao.service;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.util.FileCopyUtils;
 
 import com.baobaotao.dao.PostDao;
 import com.baobaotao.domain.Post;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
 /**
  * 
@@ -59,6 +62,17 @@ public class TestPostDao {
 		post.setPostText("测试帖子的内容");
 		
 		postDao.addPost(post);
+	}
+	
+	public void testSelectPost(){
+		
+		List<Post> list = postDao.getAttachs(2);
+		System.out.println(list.get(0));
+		
+		/**以流的形式接收Lob字段*/
+		OutputStream os = new ByteOutputStream();
+		postDao.getAttachs(1, os);
+		System.out.println(os);
 	}
 }
 

@@ -72,5 +72,19 @@
 		</tx:attributes>
 	</tx:advice>
 	
+	<!-- Oracle主键产生器 -->
+	<!-- <bean id="incre" class="org.springframework.jdbc.support.incrementer.OracleSequenceMaxValueIncrementer"
+		p:incrementerName="seq_post_id"
+		p:dataSource-ref="dataSource"
+	/> -->
+	
+	<!-- 以表方式产生主键值 -->
+	<bean id="incre" class="org.springframework.jdbc.support.incrementer.MySQLMaxValueIncrementer"
+		p:incrementerName="t_post_id"
+		p:columnName="sequence_id"
+		p:cacheSize="10"
+		p:dataSource-ref="dataSource"
+	/>
+	
 	
 </beans>

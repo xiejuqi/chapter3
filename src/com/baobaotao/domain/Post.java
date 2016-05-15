@@ -1,4 +1,7 @@
 package com.baobaotao.domain;
+
+import com.baobaotao.base.BaseLoggerController;
+
 /**
  * 
  * @Filename Post.java
@@ -20,7 +23,8 @@ package com.baobaotao.domain;
  * @Content: create
  * 
  */
-public class Post {
+public class Post extends BaseLoggerController {
+	
 	private int postId;
 	private int userId;
 	private String postText;
