@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * 
  * @History Author: xpangxie
  * 
- * @Date: 2015-8-23 ����09:55:37
+ * @Date: 2015-8-23 上午09:59:14
  * 
  * @Version: 1.0
  * 
