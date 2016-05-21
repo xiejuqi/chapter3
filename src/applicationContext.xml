@@ -49,6 +49,12 @@
 		p:nativeJdbcExtractor-ref="nativeJdbcExtractor"
 	/>
 	
+	<!-- 定义NamedParameterJdbcTemplate命名参数绑定的模板类 -->
+	<bean id="namedParamJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="dataSource"/>
+	</bean>
+	
+	
 	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" 
 		lazy-init="true"
 	/>

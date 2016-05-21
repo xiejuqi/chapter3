@@ -15,7 +15,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.baobaotao.dao.UserDao;
+import com.baobaotao.dao.UserOODao;
 import com.baobaotao.domain.User;
+
+import sun.util.logging.resources.logging;
 
 /**
  * 
@@ -50,6 +53,9 @@ public class TestUserService {
 	@Autowired 
 	private UserDao userDao;
 	
+	@Autowired
+	private UserOODao userOODao;
+	
 	public void hasMatchUser() {
 		boolean b1 = userService.hasMatchUser("admin", "123456");
 		boolean b2 = userService.hasMatchUser("admin", "111111");
@@ -83,10 +89,28 @@ public class TestUserService {
 		}
 	}
 	
-	@Test
 	public void procedure(){
 		int n = userDao.getUserNum2(1);
 		System.out.println("n="+n);
+	}
+	
+	/**
+	 * 以OO方式访问数据库
+	 */
+	@Test
+	public void getUserByOODao(){
+		User user = userOODao.getUser(1);
+		System.out.println("user="+user);
+		
+
+		User u = new User();
+		u.setUserName("Think");
+		u.setCredits(10);
+		u.setPassword("123456");
+		u.setLastVisit(new Date());
+		u.setLastIp("11111");
+		userOODao.addUser(user);
+		
 	}
 	
 	public void batchAdd(){
