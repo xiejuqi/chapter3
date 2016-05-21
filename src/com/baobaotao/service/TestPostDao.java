@@ -8,12 +8,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.FileCopyUtils;
 
 import com.baobaotao.dao.PostDao;
 import com.baobaotao.domain.Post;
+import com.baobaotao.threadlocal.TopicDao;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 
 /**
@@ -46,7 +48,6 @@ public class TestPostDao {
 	@Autowired 
 	private PostDao postDao;
 	
-	@Test
 	public void testAddPost() throws IOException{
 		Post post = new Post();
 		
@@ -73,6 +74,19 @@ public class TestPostDao {
 		OutputStream os = new ByteOutputStream();
 		postDao.getAttachs(1, os);
 		System.out.println(os);
+	}
+	
+	/**
+	 * 测试行集返回数据
+	 */
+	@Test
+	public void testSqlRowSet(){
+		SqlRowSet srs = postDao.getTopicRowSet(1);
+		
+		/**1.这时，数据连接已经断开*/
+		while(srs.next()){
+			System.out.println(srs.getString("post_id"));
+		}
 	}
 }
 

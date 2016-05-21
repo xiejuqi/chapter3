@@ -19,6 +19,7 @@ import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.incrementer.DataFieldMaxValueIncrementer;
 import org.springframework.jdbc.support.lob.LobCreator;
 import org.springframework.jdbc.support.lob.LobHandler;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.FileCopyUtils;
 
@@ -153,6 +154,16 @@ public class PostDao {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 以行集返回数据
+	 * @param userId
+	 * @return
+	 */
+	public SqlRowSet getTopicRowSet(int userId){
+		String sql = "SELECT post_id,user_id FROM t_post WHERE post_id=? ";
+		return jdbcTemplate.queryForRowSet(sql,userId);
 	}
 }
 
