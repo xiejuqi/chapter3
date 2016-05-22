@@ -111,6 +111,9 @@ public class TestUserService {
 		u.setLastIp("11111");
 		userOODao.addUser(user);
 		
+		int n = userOODao.getUserNum();
+		System.out.println("n="+n);
+		
 	}
 	
 	public void batchAdd(){

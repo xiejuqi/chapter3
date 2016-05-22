@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.object.MappingSqlQuery;
+import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.jdbc.object.SqlUpdate;
 import org.springframework.jdbc.object.StoredProcedure;
 import org.springframework.stereotype.Repository;
@@ -53,11 +54,17 @@ public class UserOODao {
 	
 	private GetTopicNum getTopicNum;
 	
+	private SqlFunction<Integer> userNumCount;
+	
 	@PostConstruct
 	public void init() {
 		this.userQuery = new UserQuery(this.dataSource);
 		this.userInsert = new UserInsert(this.dataSource);
 		this.getTopicNum = new GetTopicNum(this.dataSource);
+		
+		/**使用SqlFunction*/
+		this.userNumCount = new SqlFunction<Integer>(this.dataSource,"SELECT count(1) FROM t_user");
+		this.userNumCount.compile();
 	}
 	
 	public User getUser(int userId){
@@ -70,6 +77,10 @@ public class UserOODao {
 	
 	public int getTopicNum(int userId){
 		return getTopicNum.getTopicNum(userId);
+	}
+	
+	public int getUserNum(){
+		return this.userNumCount.run();
 	}
 
 	/**4.定义MappingSqlQuery*/
@@ -172,5 +183,4 @@ public class UserOODao {
 		}
 		
 	}
-
 }
