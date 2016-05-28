@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.baobaotao.domain.User" table="t_user">
+		<id name="userId" type="java.lang.Integer" column="user_id">
+			<generator class="identity" />
+		</id>
+
+		<property name="userName" type="java.lang.String">
+			<column name="user_name" length="16" />
+		</property>
+
+		<property name="password" type="java.lang.String">
+			<column name="password" length="16" />
+		</property>
+
+		<property name="credits" type="java.lang.Integer">
+			<column name="credits" length="16" />
+		</property>
+
+		<property name="lastVisit" type="java.util.Date">
+			<column name="last_visit" />
+		</property>
+
+		<property name="lastIp" type="java.lang.String">
+			<column name="last_ip" length="16" />
+		</property>
+	</class>
+
+</hibernate-mapping>
