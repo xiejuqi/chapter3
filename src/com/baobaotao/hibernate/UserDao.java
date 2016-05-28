@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,9 @@ import com.baobaotao.domain.User;
  */
 @Repository
 public class UserDao extends BaseDao{
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 	
 	/**1.保存实体对象*/
 	public void addUser(User user){
@@ -79,6 +84,26 @@ public class UserDao extends BaseDao{
 			}
 		});
 		return userNum;
+	}
+	
+	/**
+	 * 7.使用原生Hibernate API操作
+	 * 没有事务的话会出现异常
+	 * @param user
+	 */
+	@Transactional
+	public void addUser2(User user){
+		sessionFactory.getCurrentSession().save(user);
+	}
+	
+	/**
+	 * 8.使用原生Hibernate API操作
+	 * 没有事务的话会出现异常
+	 * @param user
+	 */
+	@Transactional
+	public void updateUser2(User user){
+		sessionFactory.getCurrentSession().update(user);
 	}
 }
 

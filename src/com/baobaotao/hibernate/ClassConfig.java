@@ -1,5 +1,6 @@
 package com.baobaotao.hibernate;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -49,6 +50,15 @@ public class ClassConfig {
 		
 		Post post = userDao.getPost(11);
 		System.out.println(post);
+		
+		User u = new User();
+		u.setUserId(1);
+		u.setUserName("Think");
+		u.setCredits(10);
+		u.setPassword("123456");
+		u.setLastVisit(new Date());
+		u.setLastIp("1111333333333333332");
+		userDao.updateUser2(u);
 	}
 }
 
