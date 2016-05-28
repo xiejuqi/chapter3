@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<class name="com.baobaotao.domain.Post" table="t_post">
+		<id name="postId" type="java.lang.Integer" >
+			<column name="post_id" length="16" />
+		</id>
+
+		<property name="userId" type="java.lang.Integer">
+			<column name="user_id" length="16" />
+		</property>
+		
+		<!-- 1.对应CLOB字段 -->
+		<property name="postText" type="org.springframework.orm.hibernate3.support.ClobStringType">
+			<column name="post_text" />
+		</property>
+	
+		<!-- 2.对应BLOB字段 -->
+		<property name="postAttach" type="org.springframework.orm.hibernate3.support.BlobByteArrayType">
+			<column name="post_attach"/>
+		</property>
+
+	</class>
+
+</hibernate-mapping>

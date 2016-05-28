@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.baobaotao.domain.Post;
 import com.baobaotao.domain.User;
 
 /**
@@ -39,9 +40,15 @@ public class ClassConfig {
 		
 		UserDao userDao = (UserDao) ac.getBean("userDao");
 		
-		List<User> list =	userDao.findUserByName("Think");
+//		List<User> list =	userDao.findUserByName("Think");
 		
-		System.out.println("list:"+list.size());
+		long n = userDao.getUserNum();
+		
+//		System.out.println("list:"+list.size());
+		System.out.println("n="+n);
+		
+		Post post = userDao.getPost(11);
+		System.out.println(post);
 	}
 }
 

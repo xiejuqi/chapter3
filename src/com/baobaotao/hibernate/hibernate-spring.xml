@@ -33,11 +33,13 @@
 	<!-- 1.指定数据源 -->
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
 		p:dataSource-ref="dataSource"
+		p:lobHandler-ref="lobHandler"
 	>
 		<!-- 2.指定Hibernate实体类映射文件 -->
 		<property name="mappingLocations">
 			<list>
 				<value>com/baobaotao/hibernate/User.hbm.xml</value>
+				<value>com/baobaotao/hibernate/Post.hbm.xml</value>
 			</list>
 		</property>
 	
@@ -55,11 +57,33 @@
 				</prop>
 			</props>
 		</property>
+		
+		<!-- 事件监听器 -->
+		<property name="eventListeners">
+			<map>
+				<!-- 1.事件监听器类型 -->
+				<entry key="merge">
+					<!-- 2.事件监听器实现类 -->
+					<bean class="org.springframework.orm.hibernate3.support.IdTransferringMergeEventListener"></bean>
+				</entry>
+			</map>
+		</property>
 	</bean>	
 	
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">  
  		<property name="sessionFactory" ref="sessionFactory"/>  
 	</bean>  
+	
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource" 
+	/>
+	
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="false"/>
+	
+	<tx:annotation-driven/>
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 </beans>
 	

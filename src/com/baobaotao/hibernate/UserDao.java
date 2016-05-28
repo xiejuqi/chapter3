@@ -1,9 +1,15 @@
 package com.baobaotao.hibernate;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.baobaotao.domain.Post;
 import com.baobaotao.domain.User;
 
 /**
@@ -45,16 +51,34 @@ public class UserDao extends BaseDao{
 		return getHibernateTemplate().get(User.class, userId);
 	}
 	
+	/**获取CLOB和BLOB属性的对象*/
+	public Post getPost(int userId){
+		return getHibernateTemplate().get(Post.class, userId);
+	}
+	
 	/**4.使用HQL查询*/
 	@SuppressWarnings("unchecked")
 	public List<User> findUserByName(String userName){
-		return getHibernateTemplate().find("FROM User u where user_name like ?",userName+"%");
+		return getHibernateTemplate().find("FROM User u where userName like ?",userName+"%");
 	}
 	
-	/**5.使用Iterate返回结果*/
+	/**5.使用Iterate返回结果，没有Spring事务配置的话会报错*/
+	@Transactional
 	public long getUserNum(){
-		Object obj = getHibernateTemplate().iterate("SELECT count(u.user_id) FROM User u").next();
+		Object obj = getHibernateTemplate().iterate("select count(u.userId) from User u").next();
 		return (Long)obj;
+	}
+	
+	/**6.基于回调函数的形式来实现*/
+	public long getUserNum2(){
+		Long userNum = getHibernateTemplate().execute(new HibernateCallback<Long>() {
+			@Override
+			public Long doInHibernate(Session session) throws HibernateException, SQLException {
+				Object obj = session.createQuery("select count(u.userId) from User u").list().iterator().next();
+				return (Long)obj;
+			}
+		});
+		return userNum;
 	}
 }
 
