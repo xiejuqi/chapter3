@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.baobaotao.domain.Post;
-import com.baobaotao.domain.User;
-
+///*import com.baobaotao.domain.User;*/
+import com.baobaotao.hibernate.User;
 /**
  * 
  * @Filename UserDao.java

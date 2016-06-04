@@ -41,6 +41,18 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- SpringSessionInViewFilter过滤器，解决延迟加载的问题 -->
+	<!-- <filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping> -->
+	
+	
+	
 	<!-- 在高版本的Web容器中，则可以使用HTTP请求监听器进行配置 -->
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>

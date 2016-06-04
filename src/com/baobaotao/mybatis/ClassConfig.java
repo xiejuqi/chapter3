@@ -1,15 +1,17 @@
-package com.baobaotao.hibernate;
+package com.baobaotao.mybatis;
 
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.baobaotao.hibernate.User;
-///*import com.baobaotao.domain.User;*/
+import com.baobaotao.domain.User;
 /**
  * 
  * @Filename ClassConfig.java
@@ -36,28 +38,21 @@ public class ClassConfig {
 		/*Configuration cfg = new Configuration().configure("com/baobaotao/hibernate/hibernate.cfg.xml");
 		SessionFactory sessionFactory = cfg.buildSessionFactory();*/
 		
-		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/hibernate/hibernate-spring.xml");
+		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/mybatis/mybatis-spring.xml");
 		
-		UserDao userDao = (UserDao) ac.getBean("userDao");
+		SqlSessionFactory sf = (SqlSessionFactory) ac.getBean("sqlSessionFactory");
 		
-//		List<User> list =	userDao.findUserByName("Think");
+		SqlSession session = 	sf.openSession();
 		
-		long n = userDao.getUserNum();
+		try {
+			User user = (User) session.selectOne("com.baobaotao.mybatis.UserMapper.getUserById",1);
+			System.out.println("user="+user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			session.close();
+		}
 		
-//		System.out.println("list:"+list.size());
-		System.out.println("n="+n);
-		
-//		Post post = userDao.getPost(11);
-//		System.out.println(post);
-		
-		User u = new User();
-		u.setUserId(1);
-		u.setUserName("Think");
-		u.setCredits(10);
-		u.setPassword("123456");
-		u.setLastVisit(new Date());
-		u.setLastIp("1111333333333333332");
-		userDao.updateUser2(u);
 	}
 }
 
