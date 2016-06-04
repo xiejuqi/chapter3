@@ -34,7 +34,19 @@
 		p:dataSource-ref="dataSource"
 		p:configLocation="classpath:com/baobaotao/mybatis/mybatisConfig.xml"
 	/>
+	<!-- p:mapperLocations="classpath:com/baobaotao/domain/mybatis/*.xml" -->
 	
+	<!-- 配置模板类 -->
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+	
+	<!-- 将映射接口转换为Spring Bean -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		p:sqlSessionFactory-ref="sqlSessionFactory"
+		p:basePackage="com.baobaotao.mybatis"
+	/>
+		
 	
 	
 </beans>

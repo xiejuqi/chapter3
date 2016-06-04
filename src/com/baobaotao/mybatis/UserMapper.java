@@ -1,4 +1,7 @@
 package com.baobaotao.mybatis;
+
+import com.baobaotao.domain.User;
+
 /**
  * 
  * @Filename UserMapper.java
@@ -21,6 +24,6 @@ package com.baobaotao.mybatis;
  * 
  */
 public interface UserMapper {
-	
+	User getUserById(Integer id);
 }
 
