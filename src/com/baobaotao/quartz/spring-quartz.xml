@@ -58,12 +58,40 @@
 		
 	</bean>
 	
-	
 	<!-- 创建CronTriggerBean -->
 	<bean id="checkImagesTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"
 		p:jobDetail-ref="jobDetail"
 		p:cronExpression="0/5 * * * * ?"
 	/>
+	
+	<!-- 在Spring中配置Scheduler -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 1.可以注册多个Trigger -->
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger"/>
+			</list>
+		</property>
+		<!-- 2.以Map类型设置SchedulerContext数据 -->
+		<property name="schedulerContextAsMap">
+			<map>
+				<entry key="timeout" value="30"/>
+			</map>
+		</property>
+		
+		<!-- 显式指定Quartz的配置文件地址 -->
+		<!-- <property name="configLocation" value="classpath:com/baobaotao/quartz/quartz.properties"></property> -->
+		
+		<!-- 允许用户在Spring中定义Quartz的属性 -->
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.threadPool.class">
+					org.quartz.simpl.SimpleThreadPool
+				</prop>
+				<prop key="org.quartz.threadPool.threadCount">10</prop>
+			</props>
+		</property>
+	</bean>
 	
 	
 	

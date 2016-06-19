@@ -32,6 +32,7 @@ public class MyJob implements Job{
 
 	@Override
 	public void execute(JobExecutionContext jctx) throws JobExecutionException {
+		
 		/**获取JobDetail关联的JobDataMap*/
 		Map dataMap = jctx.getJobDetail().getJobDataMap();
 		String size = (String) dataMap.get("size");
