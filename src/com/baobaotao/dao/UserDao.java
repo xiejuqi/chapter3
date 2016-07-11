@@ -277,7 +277,7 @@ public class UserDao {
 	public int getUserNum(final int userId){
 		/**1.调用存储过程的SQL语句*/
 		String sql = "{call P_GET_USER_NUM(?,?)}";
-		Integer num = jdbcTemplate.execute(sql,new CallableStatementCallback() {
+		Integer num = (Integer) jdbcTemplate.execute(sql,new CallableStatementCallback() {
 			@Override
 			public Object doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
 				/**2.绑定入参*/
