@@ -31,6 +31,12 @@
 	</listener>
 	-->
 	
+	<!-- 在Web容器中配置容器监听器，观察Web应用程序中调度器的启动和关闭问题 
+	<listener>
+		<listener-class>com.baobaotao.web.StartCycleRunTask</listener-class>
+	</listener>
+	-->
+	
 	<!-- 在低版本的Web容器中(Servlet2.3之前)，用户可以使用HTTP请求过滤器进行配置Web应用环境相关的Bean作用域 -->
 	<filter>
 		<filter-name>requestContextFilter</filter-name>
