@@ -3,11 +3,13 @@ package com.baobaotao.xstream.alias;
 import com.baobaotao.xstream.LoginLog;
 import com.baobaotao.xstream.User;
 import com.baobaotao.xstream.XStreamSample;
+import com.baobaotao.xstream.converters.DateConverter;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * @FileName XStreamAliasSample.java
@@ -82,6 +84,10 @@ public class XStreamAliasSample {
 
         //6.去掉集合类型生成XML的父节点，即忽略XML中的<logs></logs>标记
         xStream.addImplicitCollection(User.class,"logs");
+
+        //7.使用XStream自定义转换器
+        DateConverter dateConverter = new DateConverter(Locale.getDefault());
+        xStream.registerConverter(dateConverter);
 
         //2-3 将User对象转换为XML，并保存到指定文件
         xStream.toXML(user,outputStream);
