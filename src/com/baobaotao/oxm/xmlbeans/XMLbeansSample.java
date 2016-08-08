@@ -3,6 +3,7 @@ package com.baobaotao.oxm.xmlbeans;
 
 import com.baobaotao.domain.jaxb.LoginLog;
 import com.baobaotao.domain.jaxb.UserDocument;
+import org.apache.xmlbeans.XmlException;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +51,16 @@ public class XMLbeansSample {
         doc.save(file);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void XMLToObject() throws IOException, XmlException {
+        File file = new File("E:\\XmlbeansSample.xml");
+        UserDocument doc = UserDocument.Factory.parse(file);
+        UserDocument.User user = doc.getUser();
+        System.out.println("user"+user.getUserName());
+
+    }
+
+    public static void main(String[] args) throws IOException, XmlException {
         XMLbeansSample.objectToXML();
+        XMLbeansSample.XMLToObject();
     }
 }
