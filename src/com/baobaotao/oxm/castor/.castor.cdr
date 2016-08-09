@@ -1,0 +1,4 @@
+#Tue Aug 09 09:07:18 CST 2016
+com.baobaotao.oxm.castor.User=com.baobaotao.oxm.castor.descriptors.UserDescriptor
+com.baobaotao.oxm.castor.LoginLog=com.baobaotao.oxm.castor.descriptors.LoginLogDescriptor
+com.baobaotao.oxm.castor.Logs=com.baobaotao.oxm.castor.descriptors.LogsDescriptor
