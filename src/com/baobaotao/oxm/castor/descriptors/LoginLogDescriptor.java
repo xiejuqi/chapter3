@@ -13,12 +13,14 @@ package com.baobaotao.oxm.castor.descriptors;
 
 import com.baobaotao.oxm.castor.LoginLog;
 
+import java.io.Serializable;
+
 /**
  * Class LoginLogDescriptor.
  * 
  * @version $Revision$ $Date$
  */
-public class LoginLogDescriptor  {
+public class LoginLogDescriptor extends org.exolab.castor.xml.util.XMLClassDescriptorImpl  {
 
 
       //--------------------------/
