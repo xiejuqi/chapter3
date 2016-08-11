@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapping PUBLIC "-//EXOLAB/Castor Mapping DTD Version 1.0//EN" "http://castor.org/mapping.dtd">
+
+<mapping>
+
+    <class name="com.baobaotao.oxm.castor.User">
+        <!-- 1.设置XML文件的根据元素-->
+        <map-to xml="user"/>
+
+        <field name="userId" type="integer">
+            <bind-xml name="id" node="attribute"/>
+        </field>
+
+        <field name="userName" type="java.lang.String">
+            <bind-xml name="userName"/>
+        </field>
+
+        <field name="logs" type="com.baobaotao.oxm.castor.LoginLog" collection="arraylist">
+            <bind-xml name="log"/>
+        </field>
+
+    </class>
+
+    <!-- 2.通过在该元素中加入auto-complete属性并把值设置为true，可以告诉Castor对于该类的任何属性，只要没有在这个元素中专门列出，就使用默认映射-->
+    <class name="com.baobaotao.oxm.castor.LoginLog" identity="userId" auto-complete="true">
+
+        <map-to xml="logs"/>
+
+        <field name="loginLogId" type="int">
+            <bind-xml name="id" node="attribute"/>
+        </field>
+
+        <field name="userId" type="int">
+            <bind-xml name="userId"/>
+        </field>
+
+    </class>
+
+</mapping>

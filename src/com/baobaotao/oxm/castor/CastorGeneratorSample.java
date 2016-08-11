@@ -87,5 +87,4 @@ public class CastorGeneratorSample {
         CastorGeneratorSample.objectToXML();
         CastorGeneratorSample.XMLToObject();
     }
-
 }
