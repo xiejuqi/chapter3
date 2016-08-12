@@ -1,0 +1,15 @@
+<!-- 编写JiBX的绑定映射文件-->
+<binding>
+    <mapping name="user" class="com.baobaotao.xstream.User">
+        <value name="userName" field="userName"/>
+        <!-- name设置XML元素名称，field设置object对象属性名称 -->
+        <value name="password" field="password" usage="optional"/>
+        <value name="credits" field="credits" usage="optional"/>
+        <collection field="logs" factory="com.baobaotao.oxm.jibx.JiBXInterfaceFactory.getArrayListInstance">
+            <structure name="log" type="com.baobaotao.domain.LoginLog">
+                <value name="ip" field="ip"/>
+                <value name="loginDate" field="loginDate"/>
+            </structure>
+        </collection>
+    </mapping>
+</binding>
