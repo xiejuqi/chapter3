@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                         http://www.springframework.org/schema/oxm
+                         http://www.springframework.org/schema/oxm/spring-oxm-1.5.xsd">
+
+    <!--XStreamMarshaller 配置实例-->
+    <bean id="xstreamMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller"
+       p:autodetectAnnotations="true">
+
+        <!-- 设置类名别名 -->
+        <property name="aliases">
+            <map>
+                <!--User这个类的别名就变成了user-->
+                <entry key="user" value="com.baobaotao.xstream.User"/>
+                <entry key="LoginLog" value="com.baobaotao.xstream.LoginLog"/>
+            </map>
+        </property>
+
+        <!-- 设置属性别名 -->
+        <property name="fieldAliases">
+            <map>
+                <!-- User中的lastVisit这个属性-->
+                <entry key="com.baobaotao.xstream.User.lastVisit" value="lastVisitDate"/>
+            </map>
+        </property>
+
+    </bean>
+
+    <!--Jaxb2Marshaller配置
+          Jaxb1Marshaller 在Spring OXM 3.0之后不被支持，如果没有特殊需求，推荐使用Jaxb2Marshaller作为O/X Mapping编组与反编组包装器
+    -->
+    <!-- 传统配置方法-->
+    <bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+        <!--<property name="contextPath" value="com.baobaotao.domain.jaxb"></property>-->
+        <property name="classesToBeBound">
+            <array>
+                <value>com.baobaotao.domain.jaxb.User</value>
+                <value>com.baobaotao.domain.jaxb.LoginLog</value>
+            </array>
+        </property>
+
+        <property name="schema" value="classpath:com/babaotao/jaxb/user.xsd"/>
+    </bean>
+
+    <!-- 基于OXM命名空间配置方法 -->
+    <oxm:jaxb2-marshaller id="jaxb2Marshaller2">
+        <oxm:class-to-be-bound name="com.baobaotao.domain.jaxb.User"/>
+        <oxm:class-to-be-bound name="com.baobaotao.domain.jaxb.LoginLog"/>
+    </oxm:jaxb2-marshaller>
+
+</beans>
+
