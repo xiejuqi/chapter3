@@ -46,12 +46,31 @@
 
         <property name="schema" value="classpath:com/babaotao/jaxb/user.xsd"/>
     </bean>
-
     <!-- 基于OXM命名空间配置方法 -->
     <oxm:jaxb2-marshaller id="jaxb2Marshaller2">
         <oxm:class-to-be-bound name="com.baobaotao.domain.jaxb.User"/>
         <oxm:class-to-be-bound name="com.baobaotao.domain.jaxb.LoginLog"/>
     </oxm:jaxb2-marshaller>
+
+    <!--XmlBeansMarshaller配置-->
+    <!--1.传统配置方法-->
+    <bean id="xmlBeansMarshaller" class="org.springframework.oxm.xmlbeans.XmlBeansMarshaller"/>
+    <!--2.基于OXM命名空间配置方法-->
+    <oxm:xmlbeans-marshaller id="xmlBeansMarshaller2"/>
+    <!--XmlBeansMarshaller编组对象只能是扩展org.apache.xmlbeans.XmlObject类型，而不是一个普通的Java对象-->
+
+    <!--CastorMarshaller配置-->
+    <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"
+        p:mappingLocation="classpath:/config/mapping.xml"/>
+
+    <!-- 1.传统配置方法 -->
+    <bean id="jibxMarshaller" class="org.springframework.oxm.jibx.JibxMarshaller">
+        <property name="targetClass" value="com.baobaotao.xstream.User"/>
+        <!--<property name="bindingName" value="classpath:com/baobaotao/oxm/jibx/binding.xml"/>-->
+    </bean>
+    <!-- 基于OXM命名空间配置方法 -->
+    <oxm:jibx-marshaller id ="jibxMarshaller2" target-class="com.baobaotao.domain.User"/>
+
 
 </beans>
 
