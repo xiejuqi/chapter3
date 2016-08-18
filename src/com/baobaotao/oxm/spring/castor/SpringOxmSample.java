@@ -8,13 +8,22 @@ import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.Unmarshaller;
 
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * @FileName SpringOxmSample.java
  *
- * @Description Spring结合Castor进行编组和反编组
+ * @Description Spring结合Castor进行编组和反编组，这里使用的Mapping有些问题，类型错误：
+ *                          <p>
+ *                              <field name="logs" type="com.baobaotao.oxm.castor.Logs" >
+ *                                   <bind-xml name="log"/>
+ *                               </field>
+ *                          <p/>
+ *                          运行时需要注意或者重新使用脚本来生成User类
  *
  * @Version 1.0
  *
@@ -45,13 +54,23 @@ public class SpringOxmSample {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            System.out.println("Finally...");
+            System.out.println("[objectToXML#Finally...]");
         }
     }
 
     //XML转化为Java对象
-    public void XMLToObject(){
-
+    public void XMLToObject()  {
+        FileInputStream is = null;
+        User user = null;
+        try {
+            is = new FileInputStream("E:\\SpringOxmSample.xml");
+            user = (User) unmarshaller.unmarshal(new StreamSource(is));
+            System.out.println("user.name"+user.getUserName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.out.println("[XMLToObject#Finally...]");
+        }
     }
 
     public void setMarshaller(Marshaller marshaller) {
@@ -66,5 +85,6 @@ public class SpringOxmSample {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("com/baobaotao/oxm/spring/castor/spring-castor.xml");
         SpringOxmSample springOxmSample = (SpringOxmSample) applicationContext.getBean("springOxm");
         springOxmSample.objectToXML();
+        springOxmSample.XMLToObject();
     }
 }
