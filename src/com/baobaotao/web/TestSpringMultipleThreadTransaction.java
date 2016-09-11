@@ -30,7 +30,7 @@ import com.baobaotao.multithread.UserService;
 @Controller
 public class TestSpringMultipleThreadTransaction {
 	
-	@Autowired
+	@Autowired(required = false)
 	private UserService userService;
 	
 	@RequestMapping(value = "/testMultithreadTransaction.html")

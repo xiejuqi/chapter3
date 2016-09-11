@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form method="post" action="<c:url value="/user.html"/>">
+    <form method="post" action="<c:url value="/user/createUser.html"/>">
         <table>
             <tr>
                 <td>用户名：</td>

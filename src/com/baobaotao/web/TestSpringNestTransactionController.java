@@ -30,7 +30,7 @@ import com.baobaotao.nestcall.UserService;
 @Controller
 public class TestSpringNestTransactionController {
 	
-	@Autowired
+	@Autowired(required = false)
 	private UserService userService;
 	
 	@RequestMapping(value = "/testNestTransaction.html")

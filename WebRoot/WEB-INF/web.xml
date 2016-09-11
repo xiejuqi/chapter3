@@ -38,14 +38,14 @@
 	-->
 	
 	<!-- 在低版本的Web容器中(Servlet2.3之前)，用户可以使用HTTP请求过滤器进行配置Web应用环境相关的Bean作用域 -->
-	<filter>
+	<!--<filter>
 		<filter-name>requestContextFilter</filter-name>
 		<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>requestContextFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+		<url-pattern>*.html</url-pattern>
+	</filter-mapping>-->
 	
 	<!-- SpringSessionInViewFilter过滤器，解决延迟加载的问题 -->
 	<!-- <filter>
@@ -109,7 +109,7 @@
 		<servlet-class>
 			org.springframework.web.servlet.DispatcherServlet
 		</servlet-class>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>0</load-on-startup>
 	</servlet>
 
 	<!-- Spring MVC 处理的URL -->
