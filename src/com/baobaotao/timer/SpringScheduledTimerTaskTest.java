@@ -28,7 +28,6 @@ import org.springframework.scheduling.timer.ScheduledTimerTask;
 public class SpringScheduledTimerTaskTest {
 	public static void main(String[] args) {
 		ApplicationContext ac = new ClassPathXmlApplicationContext("com/baobaotao/timer/ScheduledTimerTask.xml");
-		
 	}
 }
 
