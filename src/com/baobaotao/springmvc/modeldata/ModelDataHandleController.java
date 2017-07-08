@@ -68,6 +68,16 @@ public class ModelDataHandleController {
 
 
     /*******************************************************使用@SessionAttribute*************************************************/
+
+    /**该方法会往隐含模型中添加一个名为user的模型属性*/
+    @ModelAttribute("user")
+    public User getUser2(){
+        User user = new User();
+        user.setUserId(1001);
+        return user;
+    }
+
+
     @RequestMapping(value = "/handle71")
     public String handle71(@ModelAttribute("user") User user){
         user.setUserName("John");
@@ -85,6 +95,7 @@ public class ModelDataHandleController {
         }
         return "success";
     }
+
 
 
 
