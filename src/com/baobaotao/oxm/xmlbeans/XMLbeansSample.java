@@ -2,7 +2,6 @@ package com.baobaotao.oxm.xmlbeans;
 
 
 import com.baobaotao.domain.jaxb.LoginLog;
-import com.baobaotao.domain.jaxb.UserDocument;
 import org.apache.xmlbeans.XmlException;
 
 import java.io.File;
@@ -38,7 +37,7 @@ public class XMLbeansSample {
     public static void objectToXML() throws IOException {
 
         //1.通过UsersDocument工厂类创建实例
-        UserDocument doc = UserDocument.Factory.newInstance();
+        /*UserDocument doc = UserDocument.Factory.newInstance();
 
         //2.创建一个新用户
         UserDocument.User user = doc.addNewUser();
@@ -57,10 +56,11 @@ public class XMLbeansSample {
         UserDocument.User user = doc.getUser();
         System.out.println("user"+user.getUserName());
 
-    }
+    }*/
 
-    public static void main(String[] args) throws IOException, XmlException {
+    /*public static void main(String[] args) throws IOException, XmlException {
         XMLbeansSample.objectToXML();
         XMLbeansSample.XMLToObject();
+    }*/
     }
 }
